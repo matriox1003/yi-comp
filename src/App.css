@@ -1,0 +1,699 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3c3c3c;
+  background-color: #f5f0e8;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== 自定义标题栏 ===== */
+.titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 36px;
+  background-color: #e8dcc8;
+  border-bottom: 1px solid #d4c5a9;
+  padding-left: 12px;
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+.titlebar-title {
+  font-size: 0.8rem;
+  color: #7a6e5d;
+  letter-spacing: 2px;
+}
+
+.titlebar-controls {
+  display: flex;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-btn {
+  width: 46px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #7a6e5d;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.titlebar-btn:hover {
+  background-color: #d4c5a9;
+  color: #5a4e3d;
+}
+
+.titlebar-btn.close:hover {
+  background-color: #c0392b;
+  color: #fff;
+}
+
+/* ===== 主体区域 ===== */
+.body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ===== 左侧 Tab 栏 ===== */
+.sidebar {
+  width: 50px;
+  background-color: #ece3d4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #d4c5a9;
+}
+
+.tab-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 4px;
+  width: 100%;
+}
+
+.tab-item {
+  padding: 12px 0;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #8a7e6d;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.tab-item:hover {
+  background-color: #d4c5a9;
+  color: #5a4e3d;
+}
+
+.tab-item.active {
+  background-color: #c9b896;
+  color: #4a3f2f;
+  font-weight: 600;
+}
+
+/* ===== 右侧内容区 ===== */
+.content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+}
+
+.content h2 {
+  font-size: 1.75rem;
+  color: #5a4e3d;
+  margin-bottom: 12px;
+}
+
+.content p {
+  color: #8a7e6d;
+  font-size: 1rem;
+}
+
+/* ===== 命 Tab ===== */
+.ming-tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Toggle 按钮组 */
+.cal-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid #d4c5a9;
+  border-radius: 6px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.cal-toggle button {
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  color: #8a7e6d;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cal-toggle button:not(:last-child) {
+  border-right: 1px solid #d4c5a9;
+}
+
+.cal-toggle button.active {
+  background-color: #c9b896;
+  color: #4a3f2f;
+  font-weight: 600;
+}
+
+.cal-toggle button:hover:not(.active) {
+  background-color: #e8dcc8;
+}
+
+/* 等高容器：防止切换模式时八字展示区跳动 */
+.input-area {
+  min-height: 120px;
+}
+
+.cal-toggle {
+  margin-bottom: 12px;
+}
+
+/* 日期输入 */
+.date-fields {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.field-group label {
+  font-size: 0.8rem;
+  color: #8a7e6d;
+}
+
+.field-group input[type="number"],
+.field-group select {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  background-color: #faf7f2;
+  color: #4a3f2f;
+  min-width: 80px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field-group input[type="number"]:focus,
+.field-group select:focus {
+  border-color: #b8a67a;
+}
+
+.field-group input[type="number"] {
+  width: 90px;
+}
+
+.leap-check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #8a7e6d;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.leap-check input[type="checkbox"] {
+  accent-color: #b8a67a;
+}
+
+/* 八字结果预览 */
+.bazi-preview {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: #ece3d4;
+  border-radius: 4px;
+  border: 1px solid #d4c5a9;
+}
+
+.bazi-pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.pillar-tag {
+  font-size: 0.75rem;
+  color: #8a7e6d;
+}
+
+.pillar-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4a3f2f;
+}
+
+.pillar-nayin {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* 八宫展示 */
+.bagong-preview {
+  display: flex;
+  gap: 0;
+  padding: 16px;
+  background-color: #ece3d4;
+  border-radius: 4px;
+  border: 1px solid #d4c5a9;
+}
+
+.bagong-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.bagong-tag {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a3f2f;
+}
+
+.bagong-sub {
+  font-size: 0.7rem;
+  color: #8a7e6d;
+}
+
+.bagong-num {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5a4e3d;
+}
+
+.bagong-hetu {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.query-btn {
+  padding: 6px 20px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid #b8a67a;
+  border-radius: 4px;
+  background-color: #c9b896;
+  color: #4a3f2f;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  align-self: flex-end;
+}
+
+.query-btn:hover {
+  background-color: #b8a67a;
+}
+
+.cancel-edit-btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  background: transparent;
+  color: #8a7e6d;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-end;
+}
+
+.cancel-edit-btn:hover {
+  background-color: #e8dcc8;
+  color: #5a4e3d;
+}
+
+/* 命宫信息（右上角） */
+.ming-gong-info {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ming-gong-label {
+  font-size: 0.75rem;
+  color: #8a7e6d;
+}
+
+.ming-gong-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a3f2f;
+}
+
+.ming-gong-verdict {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.ming-gong-verdict.ji {
+  color: #2E7D32;
+}
+
+.ming-gong-verdict.xiong {
+  color: #C62828;
+}
+
+/* 区块标签 */
+.section-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  font-size: 0.8rem;
+  color: #8a7e6d;
+  letter-spacing: 2px;
+}
+
+/* 本宫展示 */
+.bengong-preview {
+  display: flex;
+  gap: 0;
+  padding: 12px 16px;
+  background-color: #ece3d4;
+  border-radius: 4px;
+  border: 1px solid #d4c5a9;
+}
+
+.bengong-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.bengong-tag {
+  font-size: 0.7rem;
+  color: #8a7e6d;
+}
+
+.bengong-num {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4a3f2f;
+}
+
+/* 八字直接输入 */
+.bazi-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pillar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pillar-label {
+  font-size: 0.85rem;
+  color: #8a7e6d;
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.pillar-row select {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  background-color: #faf7f2;
+  color: #4a3f2f;
+  min-width: 60px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pillar-row select:focus {
+  border-color: #b8a67a;
+}
+
+/* 八字横向输入 */
+.bazi-input-horizontal {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.bazi-pillar-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.bazi-pillar-input .gan-zhi-row {
+  display: flex;
+  gap: 4px;
+}
+
+.bazi-pillar-input select {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  background-color: #faf7f2;
+  color: #4a3f2f;
+  min-width: 80px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.bazi-pillar-input select:focus {
+  border-color: #b8a67a;
+}
+
+/* ===== 悬浮保存按钮 ===== */
+.save-fab-container {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 100;
+}
+
+.save-fab {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #b8a67a;
+  background-color: #c9b896;
+  color: #4a3f2f;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-fab:hover {
+  background-color: #b8a67a;
+  transform: scale(1.05);
+}
+
+/* 纯 DOM toast */
+.toast-msg {
+  position: fixed;
+  bottom: 86px;
+  right: 32px;
+  padding: 6px 16px;
+  background-color: #4a3f2f;
+  color: #faf7f2;
+  font-size: 0.8rem;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  border-radius: 4px;
+  z-index: 200;
+  animation: toast-fade 1.5s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes toast-fade {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.save-dialog {
+  background-color: #faf7f2;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.save-dialog input {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #4a3f2f;
+  outline: none;
+  min-width: 160px;
+}
+
+.save-dialog input:focus {
+  border-color: #b8a67a;
+}
+
+.save-dialog button {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  border: 1px solid #b8a67a;
+  border-radius: 4px;
+  background-color: #c9b896;
+  color: #4a3f2f;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.save-dialog button:hover {
+  background-color: #b8a67a;
+}
+
+/* ===== 录 Tab ===== */
+.lu-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lu-empty {
+  text-align: center;
+  padding: 60px 0;
+  color: #8a7e6d;
+}
+
+.lu-empty-text {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.lu-empty-hint {
+  font-size: 0.85rem;
+  color: #a89e8d;
+}
+
+.record-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background-color: #ece3d4;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  transition: background-color 0.15s;
+}
+
+.record-card:hover {
+  background-color: #e8dcc8;
+}
+
+.record-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.record-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a3f2f;
+}
+
+.record-bazi {
+  font-size: 0.8rem;
+  color: #8a7e6d;
+  letter-spacing: 1px;
+}
+
+.record-date {
+  font-size: 0.75rem;
+  color: #a89e8d;
+}
+
+.record-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.record-actions button {
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  border: 1px solid #d4c5a9;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-view {
+  background-color: #c9b896;
+  color: #4a3f2f;
+  border-color: #b8a67a;
+}
+
+.btn-view:hover {
+  background-color: #b8a67a;
+}
+
+.btn-delete {
+  background: transparent;
+  color: #8a7e6d;
+}
+
+.btn-delete:hover {
+  background-color: #e8dcc8;
+  color: #5a4e3d;
+}
